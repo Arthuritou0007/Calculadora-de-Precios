@@ -35,12 +35,32 @@ def crear_textfield(label, color, color2):
 espacio_vacio1 = ft.Container(height=100)
 espacio_vacio2 = ft.Container(height=50)
 
+
+# Funciones lógicas:
+def calcular_precio(cantidad, pérdida, valor_original, ganancia):
+    cantidad_total = cantidad - pérdida
+    precio_costo = valor_original / cantidad_total
+    porcentaje = (ganancia / 100) + 1
+    final = precio_costo * porcentaje
+    return round(final, 2)
+
+
 def main(page):
 
     page.vertical_alignment = ft.MainAxisAlignment.START
     page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
 
     page.theme_mode = ft.ThemeMode.LIGHT
+
+    def calcular_ft(e):
+        cantidad = int(ingresar_cantidad.value)
+        perdida = int(ingresar_perdida.value)
+        valor_original = int(ingresar_valor_original.value)
+        ganancia = int(ingresar_ganancia.value)
+        final = calcular_precio(cantidad, perdida, valor_original, ganancia)
+
+        dato_total.value = str(final)
+
 
     titulo = ft.Text(
         "CALCULADORA DE PRECIOS",
@@ -76,11 +96,17 @@ def main(page):
         alignment=ft.MainAxisAlignment.SPACE_EVENLY
     )
 
-    ingresar_ganancia = crear_textfield("GANANCIA", ft.Colors.BLACK, ft.Colors.WHITE)
+    ingresar_ganancia = ft.TextField(
+        label="GANANCIA",
+        color=ft.Colors.BLACK,
+        bgcolor=ft.Colors.WHITE,
+        width=150,
+        on_change=calcular_ft
+    )
 
     texto_total = crear_subtitulos("Total:", ft.Colors.BLACK)
     dato_total = ft.Text(
-        "2000",
+        " ",
         weight=ft.FontWeight.BOLD,
         color=ft.Colors.WHITE,
         size=30,
@@ -97,7 +123,7 @@ def main(page):
 
     texto_costo = crear_subtitulos("Costo:", ft.Colors.BLACK)
     dato_costo = ft.Text(
-        "2000",
+        " ",
         weight=ft.FontWeight.BOLD,
         color=ft.Colors.WHITE,
         size=30,
@@ -114,7 +140,7 @@ def main(page):
 
     texto_sugerido = crear_subtitulos("Precio sugerido:", ft.Colors.BLACK)
     dato_sugerido = ft.Text(
-        "2000",
+        " ",
         weight=ft.FontWeight.BOLD,
         color=ft.Colors.WHITE,
         size=30,
@@ -127,8 +153,6 @@ def main(page):
         padding=20,
         width=150
     )
-
-    texto_sugerido.align = ft.Alignment.CENTER
 
     columna_datos_texto = ft.Column(
         controls=[texto_total, texto_costo, texto_sugerido],
@@ -144,7 +168,10 @@ def main(page):
         alignment=ft.MainAxisAlignment.SPACE_EVENLY
     )
 
+    calcular = ft.Button("CALCULAR", on_click=calcular_ft)
 
-    page.add(contenedor_titulo, espacio_vacio1, fila_datos1, espacio_vacio2, ingresar_ganancia, espacio_vacio1, fila_precios)
+    ingresar_valor_original = crear_textfield("Valor original", ft.Colors.BLACK, ft.Colors.WHITE)
+
+    page.add(contenedor_titulo, espacio_vacio1, ingresar_valor_original, fila_datos1, espacio_vacio2, ingresar_ganancia, espacio_vacio2, calcular, espacio_vacio1, fila_precios)
 
 ft.run(main)

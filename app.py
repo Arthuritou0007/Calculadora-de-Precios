@@ -37,9 +37,12 @@ espacio_vacio2 = ft.Container(height=50)
 
 
 # Funciones lógicas:
-def calcular_precio(cantidad, pérdida, valor_original, ganancia):
+def calcular_precio(cantidad, pérdida, valor_original):
     cantidad_total = cantidad - pérdida
     precio_costo = valor_original / cantidad_total
+    return round(precio_costo, 2)
+
+def calcular_ganancia(precio_costo, ganancia):
     porcentaje = (ganancia / 100) + 1
     final = precio_costo * porcentaje
     return round(final, 2)
@@ -57,9 +60,13 @@ def main(page):
         perdida = int(ingresar_perdida.value)
         valor_original = int(ingresar_valor_original.value)
         ganancia = int(ingresar_ganancia.value)
-        final = calcular_precio(cantidad, perdida, valor_original, ganancia)
+        precio_costo = calcular_precio(cantidad, perdida, valor_original)
 
-        dato_total.value = str(final)
+        dato_total.value = str(precio_costo)
+
+        final = calcular_ganancia(precio_costo, ganancia)
+
+        dato_costo.value = str(final)
 
 
     titulo = ft.Text(
@@ -117,7 +124,7 @@ def main(page):
         bgcolor=ft.Colors.BLACK,
         border_radius=10,
         padding=20,
-        width=150
+        width=170
     )
 
 
@@ -134,7 +141,7 @@ def main(page):
         bgcolor=ft.Colors.BLACK,
         border_radius=10,
         padding=20,
-        width=150
+        width=170
     )
 
 
@@ -151,7 +158,7 @@ def main(page):
         bgcolor=ft.Colors.BLACK,
         border_radius=10,
         padding=20,
-        width=150
+        width=170
     )
 
     columna_datos_texto = ft.Column(

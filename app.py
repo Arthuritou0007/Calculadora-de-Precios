@@ -84,22 +84,11 @@ def main(page):
         align=ft.Alignment.CENTER,
         width=100000000000
     )
-
-    seleccionar_cantidad = ft.SegmentedButton(
-    segments=[
-        ft.Segment(value="kg", label=ft.Text("Kg")),
-        ft.Segment(value="unidades", label=ft.Text("Unidades")),
-        ],
-    selected=["kg"]
-    )
     
     ingresar_cantidad = crear_textfield("CANTIDAD", ft.Colors.BLACK, ft.Colors.WHITE)
-    fila_cantidad = ft.Row(
-        controls=[ingresar_cantidad, seleccionar_cantidad]
-    )
     ingresar_perdida = crear_textfield("PÉRDIDA", ft.Colors.BLACK, ft.Colors.WHITE)
     fila_datos1 = ft.Row(
-        controls=[fila_cantidad, ingresar_perdida],
+        controls=[ingresar_cantidad, ingresar_perdida],
         alignment=ft.MainAxisAlignment.SPACE_EVENLY
     )
 
@@ -111,7 +100,7 @@ def main(page):
         on_change=calcular_ft
     )
 
-    texto_total = crear_subtitulos("Total:", ft.Colors.BLACK)
+    texto_costo = crear_subtitulos("Costo:", ft.Colors.BLACK)
     dato_total = ft.Text(
         " ",
         weight=ft.FontWeight.BOLD,
@@ -128,7 +117,7 @@ def main(page):
     )
 
 
-    texto_costo = crear_subtitulos("Costo:", ft.Colors.BLACK)
+    texto_total = crear_subtitulos("Total:", ft.Colors.BLACK)
     dato_costo = ft.Text(
         " ",
         weight=ft.FontWeight.BOLD,
@@ -162,7 +151,7 @@ def main(page):
     )
 
     columna_datos_texto = ft.Column(
-        controls=[texto_total, texto_costo, texto_sugerido],
+        controls=[texto_costo, texto_total, texto_sugerido],
         alignment=ft.MainAxisAlignment.CENTER
     )
 
@@ -175,10 +164,8 @@ def main(page):
         alignment=ft.MainAxisAlignment.SPACE_EVENLY
     )
 
-    calcular = ft.Button("CALCULAR", on_click=calcular_ft)
-
     ingresar_valor_original = crear_textfield("Valor original", ft.Colors.BLACK, ft.Colors.WHITE)
 
-    page.add(contenedor_titulo, espacio_vacio1, ingresar_valor_original, fila_datos1, espacio_vacio2, ingresar_ganancia, espacio_vacio2, calcular, espacio_vacio1, fila_precios)
+    page.add(contenedor_titulo, espacio_vacio1, ingresar_valor_original, fila_datos1, espacio_vacio2, ingresar_ganancia, espacio_vacio2, espacio_vacio1, fila_precios)
 
 ft.run(main)
